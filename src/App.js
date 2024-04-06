@@ -4,6 +4,7 @@ import "./App.css";
 import Layout from "./pages/Layout";
 import PrivateRoute from "./middleware";
 import Home from "./pages/user/Home";
+import Login from "./pages/auth/Login";
 
 const ROLES = {
   User: 2001,
