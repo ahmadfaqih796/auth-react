@@ -1,10 +1,8 @@
-import { useRef, useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-
-import axios from "../../api/index";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
-const LOGIN_URL = "/auth/login";
+import { loginService } from "../../lib/services/auth";
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -32,33 +30,16 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      fetch("https://dummyjson.com/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: "kminchelle",
-          password: "0lelplR",
-          expiresInMins: 30, // optional, defaults to 60
-        }),
-      })
-        .then((res) => res.json())
-        .then(console.log);
-      const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ user, pwd, expiresInMins: 30 }),
-        {
-          headers: {
-            Origin: "http://localhost:3000",
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
-      console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response));
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-      setAuth({ user, pwd, roles, accessToken });
+      // username: "kminchelle",
+      // password: "0lelplR",
+      const response = await loginService({
+        username: user,
+        password: pwd,
+        expiresInMins: 30,
+      });
+      const accessToken = response?.token;
+      const roles = "admin";
+      setAuth({ user, pwd, roles: roles, accessToken });
       setUser("");
       setPwd("");
       navigate(from, { replace: true });
