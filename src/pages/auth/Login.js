@@ -5,8 +5,7 @@ import { loginService } from "../../lib/services/auth";
 import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { auth, setAuth } = useAuth();
-  console.log("aaaaaaaaaaaaa", auth);
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,7 +38,7 @@ const Login = () => {
         expiresInMins: 30,
       });
       const accessToken = response?.token;
-      const roles = "User";
+      const roles = [2001];
       setAuth({
         user: user,
         pwd: pwd,
