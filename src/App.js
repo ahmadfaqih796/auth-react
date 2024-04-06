@@ -5,6 +5,9 @@ import Layout from "./pages/Layout";
 import PrivateRoute from "./middleware";
 import Home from "./pages/user/Home";
 import Login from "./pages/auth/Login";
+import Missing from "./pages/Missing";
+import LinkPage from "./pages/LinkPage";
+import Unauthorized from "./pages/Unautorized";
 
 const ROLES = {
   User: 2001,
@@ -18,16 +21,16 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* public routes */}
         <Route path="login" element={<Login />} />
-        {/* <Route path="register" element={<Register />} />
-      <Route path="linkpage" element={<LinkPage />} />
-      <Route path="unauthorized" element={<Unauthorized />} /> */}
+        {/* <Route path="register" element={<Register />} /> */}
+        <Route path="linkpage" element={<LinkPage />} />
+        <Route path="unauthorized" element={<Unauthorized />} />
 
         <Route element={<PrivateRoute allowedRoles={[ROLES.User]} />}>
           <Route path="/" element={<Home />} />
         </Route>
 
         {/* catch all */}
-        {/* <Route path="*" element={<Missing />} /> */}
+        <Route path="*" element={<Missing />} />
       </Route>
     </Routes>
   );

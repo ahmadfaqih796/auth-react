@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import useAuth from "../../hooks/useAuth";
 import { loginService } from "../../lib/services/auth";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
+  console.log("aaaaaaaaaaaaa", auth);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,13 +39,19 @@ const Login = () => {
         expiresInMins: 30,
       });
       const accessToken = response?.token;
-      const roles = "admin";
-      setAuth({ user, pwd, roles: roles, accessToken });
+      const roles = "User";
+      setAuth({
+        user: user,
+        pwd: pwd,
+        roles: roles,
+        accessToken: accessToken,
+      });
       setUser("");
       setPwd("");
       navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
+        console.log(err?.response);
         setErrMsg("No Server Response");
       } else if (err.response?.status === 400) {
         setErrMsg("Missing Username or Password");
